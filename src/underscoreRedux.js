@@ -90,17 +90,17 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
-    var newCollection = [];
+    // var newCollection = [];
 
-    for (var key = 0; key < collection.length; key++){
-      var num = collection[key];
+    // for (var key = 0; key < collection.length; key++){
+    //   var num = collection[key];
+    //  if (test(num)) {
+    //     newCollection.push(num);
+    //   }    
+    // }
+    // return newCollection;
 
-     if (test(num)) {
-        newCollection.push(num);
-      }    
-    }
-
-    return newCollection;
+    _.each(collection, test(item, i)) 
   };
 
   // Return all elements of an array that don't pass a truth test.
