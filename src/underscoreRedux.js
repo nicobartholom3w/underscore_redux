@@ -152,16 +152,35 @@
     return rejects;
   };
 
+
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    let specialArray = [];
+    let anObject = {};
+    for (let i = 0; i < array.length; i++){
+      if (!(array[i] in anObject)){
+        anObject[array[i]] = true;
+        specialArray.push(array[i]);
+      }
+    }
+    return specialArray;
   };
-
+   // for (let i = 0; i < array.length; i++){
+    //   if(!specialArray.includes(array[i])){
+    //     specialArray.push(array[i]);
+    //   }
+    // }
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    let newCollection = [];
+    _.each(collection, (item) => {
+      newCollection.push(iterator(item));
+    });
+    return newCollection;
   };
 
   /*
@@ -182,6 +201,11 @@
     });
   };
 
+  // collection = [{name: "moe", age: 30}, {name: "curly", age: 50}];
+  // should return ["moe", "curly"];
+  // OKAY!! ^^
+  // 
+  // 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(accumulator, item) for each item. accumulator should be
   // the return value of the previous iterator call.
@@ -203,7 +227,20 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    let total = accumulator;
+    for(let i = 0; i < collection.length; i++){
+      if(total == undefined){
+        total = collection[0];
+        i++;
+        if(collection.length <= 1){
+          break;
+        }
+      }
+      total = iterator(total, collection[i]);
+    }
+    return total;
   };
+
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
