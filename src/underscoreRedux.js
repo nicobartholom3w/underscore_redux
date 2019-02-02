@@ -135,6 +135,7 @@
   // });
 
   // Return all elements of an array that don't pass a truth test.
+  // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
@@ -228,15 +229,23 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     let total = accumulator;
-    for(let i = 0; i < collection.length; i++){
-      if(total == undefined){
-        total = collection[0];
-        i++;
-        if(collection.length <= 1){
-          break;
+    if(Array.isArray(collection)){
+      for(let i = 0; i < collection.length; i++){
+        if(total == undefined){
+          total = collection[0];
+          i++;
+          if(collection.length <= 1){
+            break;
+          }
         }
+        total = iterator(total, collection[i]);
       }
-      total = iterator(total, collection[i]);
+    }
+    else {
+      let keys = Object.keys(collection);
+      for (let value of keys){
+        total = iterator(total, collection[value]);
+      }
     }
     return total;
   };
@@ -256,8 +265,16 @@
 
 
   // Determine whether all of the elements match a truth test.
+  // iterator here seems to just return the value that is put into it
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if (iterator == undefined){
+      iterator = (val) => val;
+    }
+    return _.reduce(collection, (passes, item) => {
+      return passes === !!iterator(item);
+    }, true);
+  
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
