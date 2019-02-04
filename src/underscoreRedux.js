@@ -287,12 +287,19 @@
     if (iterator == undefined){
       iterator = _.identity;
     }
-    for(let i = 0; i < collection.length; i++){
-      if(iterator(collection[i])){
-        return true;
-      }
-    }
-    return false;
+    return !_.every(collection, (item) => {
+      return !iterator(item);
+    });
+    
+    // if (iterator == undefined){
+    //   iterator = _.identity;
+    // }
+    // for(let i = 0; i < collection.length; i++){
+    //   if(iterator(collection[i])){
+    //     return true;
+    //   }
+    // }
+    // return false;
   };
 
 
@@ -310,11 +317,31 @@
   //   var obj1 = {key1: "something"};
   //   _.extend(obj1, {
   //     key2: "something new",
-  //     key3: "something else new"
-  //   }, {
-  //     bla: "even more stuff"
-  //   }); // obj1 now contains key1, key2, key3 and bla
+  //     key3: "something else new"}, 
+  //     {bla: "even more stuff"}); 
+  //   // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    let newObj;
+    for(var j = 0; j < arguments.length; j++){
+      if(newObj == undefined){
+        newObj = arguments[j];
+        j++;
+        if(arguments.length <= 1){
+          return newObj;
+        }
+      }
+      let key = Object.keys(arguments[j]);
+      let value = Object.values(arguments[j]);
+      if(key == [] && value == []){
+        newObj = Object.assign(newObj, arguments[j]);
+      }
+      else {
+        for(let i = 0; i < key.length; i++){
+          newObj[key[i]] = value[i];
+        }
+      }
+    }
+    return newObj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
