@@ -333,7 +333,8 @@
       let key = Object.keys(arguments[j]);
       let value = Object.values(arguments[j]);
       if(key == [] && value == []){
-        newObj = Object.assign(newObj, arguments[j]);
+        // newObj = Object.assign(newObj, arguments[j]);
+        newObj = newObj;
       }
       else {
         for(let i = 0; i < key.length; i++){
@@ -347,6 +348,32 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+     let newObj;
+    for(var j = 0; j < arguments.length; j++){
+      if(newObj == undefined){
+        newObj = arguments[j];
+        j++;
+        if(arguments.length <= 1){
+          return newObj;
+        }
+      }
+      let key = Object.keys(arguments[j]);
+      let value = Object.values(arguments[j]);
+      if(key == [] && value == []){
+        // newObj = Object.assign(newObj, arguments[j]);
+        // newObj = newObj;
+        break;
+      }
+      else {
+        for(let i = 0; i < key.length; i++){
+          if([key[i]] in newObj){
+            break;
+          }
+          newObj[key[i]] = value[i];
+        }
+      }
+    }
+    return newObj;
   };
 
 
@@ -390,6 +417,18 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    let result;
+    let alreadyCalculated = false;
+
+    return function(){
+      if(!alreadyCalculated){
+        result = func.apply(this, arguments);
+        alreadyCalculated = true;
+      }
+      // Need to compare arguments to see if needs to be recalculated...
+      return result;
+
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
