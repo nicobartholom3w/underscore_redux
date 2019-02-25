@@ -418,13 +418,27 @@
   // instead if possible.
   _.memoize = function(func) {
     let result;
-    let alreadyCalculated = false;
+    let previousArguments;
+    let alreadyCalled = false;
 
     return function(){
-      if(!alreadyCalculated){
+      if(!alreadyCalled){
+        previousArguments = arguments;
         result = func.apply(this, arguments);
-        alreadyCalculated = true;
+        alreadyCalled = true;
       }
+      else {
+        for(let i = 0; i < previousArguments.length; i++){
+          if (previousArguments[i] !== arguments[i]){
+            result = func.apply(this, arguments);
+            break;
+          }
+        }
+      }
+
+      // if(previousArguments !== arguments){
+      //   result = func.apply(this, arguments);
+      // }
       // Need to compare arguments to see if needs to be recalculated...
       return result;
 
