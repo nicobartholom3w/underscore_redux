@@ -532,20 +532,33 @@
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
     // return array of objects in correct order
-    let highestValue;
-    let highestObj;
+    
+
     for (let i = 0; i < collection.length; i++) {
-      let currentValue = iterator(collection[i]);
-      let currentObj = collection[i];
-      if (collection[i - 1] == undefined) {
-        highestValue = currentValue;
-        highestObj = collection[i];
+      let highestValue = iterator(collection[0]);
+      let highestObj = collection[0];
+
+      for (let j = 0; j < collection.length - i; j++){
+        let currentValue = iterator(collection[j]);
+        let currentObj = collection[j];
+        if(currentValue == undefined){
+          highestValue = currentValue;
+          highestObj = currentObj;
+        }
+        else if (highestValue == undefined){
+          collection[j] = highestObj;
+          collection[j - 1] = currentObj;
+        }
+        else if (currentValue < highestValue) {
+          collection[j] = highestObj;
+          collection[j - 1] = currentObj;
+        }
+        else {
+          highestValue = currentValue;
+          highestObj = currentObj;
+        }
       }
-      
-      if (currentValue < highestValue) {
-        collection[i] = highestObj;
-        collection[i - 1] = currentObj;
-      }
+     
     }  
     return collection;
   };
