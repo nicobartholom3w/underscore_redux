@@ -475,12 +475,27 @@
   //   return newArray;
   // };
 
-  _.shuffle = function(array) {
-    for (let i = 0; i < array.length; i++){
-      let position = Math.floor(Math.random() * array.length);
-      array.slice(i).splice(position, 0, array[i]);
+  // _.shuffle = function(array) {
+  //   let newArray = array.slice(0);
+
+  //   for (let i = 0; i < newArray.length; i++){
+  //     let position = Math.ceil(Math.random() * newArray.length);
+  //     newArray.splice(position, 0, newArray[0]);
+  //     newArray.shift();
+  //   }
+  //   return newArray;
+  // };
+    _.shuffle = function(array) {
+    let newArray = array.slice();
+
+    for (let i = 0; i < newArray.length; i++){
+      let current = newArray[i];
+      let position = Math.floor(Math.random() * newArray.length);
+      let positionValue = newArray[position];
+      newArray[position] = current;
+      newArray[i] = positionValue;
     }
-    return array;
+    return newArray;
   };
   /**
    * EXTRA CREDIT
@@ -493,6 +508,22 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+      let answer = [];
+
+      if (typeof functionOrKey == "string") {
+        functionOrKey = String.prototype[functionOrKey];
+      }
+      if (args == undefined || args == null){
+        for (let item of collection) { 
+          let functionResult = functionOrKey.apply(item, collection);
+          answer.push(functionResult);
+        }
+      }
+      else {
+        let functionResult = functionOrKey.apply(args, collection);
+        answer.push(functionResult);
+      } 
+      return answer;
   };
 
   // Sort the object's values by a criterion produced by an iterator.
