@@ -531,6 +531,23 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+    // return array of objects in correct order
+    let highestValue;
+    let highestObj;
+    for (let i = 0; i < collection.length; i++) {
+      let currentValue = iterator(collection[i]);
+      let currentObj = collection[i];
+      if (collection[i - 1] == undefined) {
+        highestValue = currentValue;
+        highestObj = collection[i];
+      }
+      
+      if (currentValue < highestValue) {
+        collection[i] = highestObj;
+        collection[i - 1] = currentObj;
+      }
+    }  
+    return collection;
   };
 
   // Zip together two or more arrays with elements of the same index
