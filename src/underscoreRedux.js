@@ -532,15 +532,18 @@
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
     // return array of objects in correct order
-    
+    // if (typeof iterator == "string") {
+    //   let length = collection[0]Array.prototype[iterator];
+    // }
 
     for (let i = 0; i < collection.length; i++) {
-      let highestValue = iterator(collection[0]);
       let highestObj = collection[0];
+      let highestValue = iterator(highestObj);
 
       for (let j = 0; j < collection.length - i; j++){
-        let currentValue = iterator(collection[j]);
         let currentObj = collection[j];
+        let currentValue = iterator(currentObj);
+        
         if(currentValue == undefined){
           highestValue = currentValue;
           highestObj = currentObj;
@@ -563,20 +566,37 @@
     return collection;
   };
 
-  // Zip together two or more arrays with elements of the same index
-  // going together.
-  //
-  // Example:
-  // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
-  _.zip = function() {
-  };
-
-  // Takes a multidimensional array and converts it to a one-dimensional array.
+   // Takes a multidimensional array and converts it to a one-dimensional array.
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
   };
+
+  // Zip together two or more arrays with elements of the same index
+  // going together.
+  //
+  // Example:
+  // _.zip(['a','b','c','d'], [1,2,3], [poop, farts, cheese]) returns [['a',1, poop], ['b',2, farts], ['c',3, cheese], ['d',undefined, undefined]]
+  _.zip = function() {
+    let zipped = [];
+    let firstArg = arguments[0];
+    let numOfArg = arguments.length;
+    let thirdArg = arguments[2];
+    let arg = arguments[0];
+    let secondArg = arguments[1];
+    thirdArg.push(undefined, undefined);
+
+    for (let i = 0; i < firstArg.length; i++) {
+      let zippedElement = [arg[i]];
+      zippedElement.push(secondArg[i], thirdArg[i]);
+      zipped.push(zippedElement);
+    }
+
+    return zipped;
+  };
+
+ 
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
