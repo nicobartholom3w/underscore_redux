@@ -579,20 +579,16 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3], [poop, farts, cheese]) returns [['a',1, poop], ['b',2, farts], ['c',3, cheese], ['d',undefined, undefined]]
   _.zip = function() {
+    let collections = Array.from(arguments);
     let zipped = [];
-    let firstArg = arguments[0];
-    let numOfArg = arguments.length;
-    let thirdArg = arguments[2];
-    let arg = arguments[0];
-    let secondArg = arguments[1];
-    thirdArg.push(undefined, undefined);
-
+    let firstArg = collections[0];
     for (let i = 0; i < firstArg.length; i++) {
-      let zippedElement = [arg[i]];
-      zippedElement.push(secondArg[i], thirdArg[i]);
+      let zippedElement = [];
+      for (let j = 0; j < collections.length; j++) {
+        zippedElement.push(collections[j][i]);
+      }
       zipped.push(zippedElement);
     }
-
     return zipped;
   };
 
