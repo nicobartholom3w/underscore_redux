@@ -571,69 +571,42 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
-    result = [];
-    let current = nestedArray[0];
-    let currentArray = [];
 
-    while(current !== undefined) {
-      while (Array.isArray(current)) {
-        currentArray = current;
-        current = current[0];
-      }
-      result.push(current);
-      if (currentArray.length > 1) {
-        currentArray.shift(current);
-        current = currentArray;
-      }
-      else {
-        nestedArray.shift(current);
-        current = nestedArray[0];
-      }   
+    if (result == undefined){
+      result = [];
     }
+    if(nestedArray.length == 0){
+        return result;
+      }
+    if(Array.isArray(nestedArray)){
+      return _.flatten(nestedArray.shift(), result) && _.flatten(nestedArray, result);     
+    }
+    else {
+      result.push(nestedArray);
+      return result;
+    }
+    // result = [];
+    // let current = nestedArray[0];
+    // let currentArray = [];
 
-    return result;
-  };
-// if(!(Array.isArray(current))){
-//         result.push(nestedArray.shift(current));  
-//       }
-//       else {
-//         // keep going
-        
-//       }
-  // let current;
-    // if (nestedArray[current] == undefined){
-    //   return result;
-    // }
-    // if(Array.isArray(item)){
-    //   _.flatten()
-    // }
-    // while(Array.isArray){}    
-
-    // if(!(Array.isArray(item))) {
-    //   result.push(item);
-    //   nestedArray.shift(item);
-    //   _.flatten(nestedArray, result);
-    // }
-    // else {
-    //   _.flatten(nestedArray[i]);
-    // }
-    // // 
-    // for(let i = 0; i < nestedArray.length; i++){
-    //   let item = nestedArray[i];
-    //   if(!(Array.isArray(item)){
-    //     // for (let j = 0; j < item.length; j++){
-    //     //   result.push(item[j]);
-    //     // }
-    //     result.push(item);
-    //     nestedArray.shift(item);
-    //     _.flatten(nestedArray, result);
+    // while(current !== undefined) {
+    //   while (Array.isArray(current)) {
+    //     currentArray = current;
+    //     current = current[0];
+    //   }
+    //   result.push(current);
+    //   if (currentArray.length > 1) {
+    //     currentArray.shift();
+    //     current = currentArray;
     //   }
     //   else {
-    //     _.flatten(nestedArray[])
-    //   }
+    //     nestedArray.shift();
+    //     current = nestedArray[0];
+    //   }   
     // }
-    // 
-    // 
+    // return result;
+  };
+  //
   // Zip together two or more arrays with elements of the same index
   // going together.
   //
