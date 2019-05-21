@@ -571,14 +571,43 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
-    // let current;
+    result = [];
+    let current = nestedArray[0];
+    let currentArray = [];
+
+    while(current !== undefined) {
+      while (Array.isArray(current)) {
+        currentArray = current;
+        current = current[0];
+      }
+      result.push(current);
+      if (currentArray.length > 1) {
+        currentArray.shift(current);
+        current = currentArray;
+      }
+      else {
+        nestedArray.shift(current);
+        current = nestedArray[0];
+      }   
+    }
+
+    return result;
+  };
+// if(!(Array.isArray(current))){
+//         result.push(nestedArray.shift(current));  
+//       }
+//       else {
+//         // keep going
+        
+//       }
+  // let current;
     // if (nestedArray[current] == undefined){
     //   return result;
     // }
     // if(Array.isArray(item)){
     //   _.flatten()
     // }
-    while(Array.isArray){}    
+    // while(Array.isArray){}    
 
     // if(!(Array.isArray(item))) {
     //   result.push(item);
@@ -588,23 +617,23 @@
     // else {
     //   _.flatten(nestedArray[i]);
     // }
+    // // 
+    // for(let i = 0; i < nestedArray.length; i++){
+    //   let item = nestedArray[i];
+    //   if(!(Array.isArray(item)){
+    //     // for (let j = 0; j < item.length; j++){
+    //     //   result.push(item[j]);
+    //     // }
+    //     result.push(item);
+    //     nestedArray.shift(item);
+    //     _.flatten(nestedArray, result);
+    //   }
+    //   else {
+    //     _.flatten(nestedArray[])
+    //   }
+    // }
     // 
-    for(let i = 0; i < nestedArray.length; i++){
-      let item = nestedArray[i];
-      if(!(Array.isArray(item)){
-        // for (let j = 0; j < item.length; j++){
-        //   result.push(item[j]);
-        // }
-        result.push(item);
-        nestedArray.shift(item);
-        _.flatten(nestedArray, result);
-      }
-      else {
-        _.flatten(nestedArray[])
-      }
-    }
-  };
-
+    // 
   // Zip together two or more arrays with elements of the same index
   // going together.
   //
