@@ -571,6 +571,38 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    // let current;
+    // if (nestedArray[current] == undefined){
+    //   return result;
+    // }
+    // if(Array.isArray(item)){
+    //   _.flatten()
+    // }
+    while(Array.isArray){}    
+
+    // if(!(Array.isArray(item))) {
+    //   result.push(item);
+    //   nestedArray.shift(item);
+    //   _.flatten(nestedArray, result);
+    // }
+    // else {
+    //   _.flatten(nestedArray[i]);
+    // }
+    // 
+    for(let i = 0; i < nestedArray.length; i++){
+      let item = nestedArray[i];
+      if(!(Array.isArray(item)){
+        // for (let j = 0; j < item.length; j++){
+        //   result.push(item[j]);
+        // }
+        result.push(item);
+        nestedArray.shift(item);
+        _.flatten(nestedArray, result);
+      }
+      else {
+        _.flatten(nestedArray[])
+      }
+    }
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -580,6 +612,7 @@
   // _.zip(['a','b','c','d'], [1,2,3], [poop, farts, cheese]) returns [['a',1, poop], ['b',2, farts], ['c',3, cheese], ['d',undefined, undefined]]
   _.zip = function() {
     let collections = Array.from(arguments);
+    // Array.prototype.slice.call(arguments);
     let zipped = [];
     let firstArg = collections[0];
     for (let i = 0; i < firstArg.length; i++) {
