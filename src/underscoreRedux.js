@@ -645,29 +645,31 @@
   _.intersection = function() {
     let argsArray = Array.from(arguments);
     let firstArray = argsArray[0];
-    let firstArrayLength = firstArray.length
-    let matches = [];
-    // to truly implement it would also need to test which array is the longest and start there
-    // 
+    let nextArray = argsArray[1];
+
     while(argsArray.length !== 1) {
-      for (let i = 0; i < firstArrayLength; i++){
-        let nextArray = argsArray[1];
-        for(let j = 0; j < firstArrayLength - i; j++){
+      for (let i = 0; i < firstArray.length; i++){
+        for(let j = 0; j < nextArray.length; j++){
           if (firstArray[i] == nextArray[j]) {
-            matches.push(firstArray[i]);
             break;
+          }
+          else if(j == nextArray.length - 1){
+            firstArray.splice(i, 1);
+            i--;
           }
         }
       }
       argsArray.shift();
-      firstArray = argsArray[0];
+      nextArray = argsArray[0];
     }
-    return matches;
+    return firstArray;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+
+
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
