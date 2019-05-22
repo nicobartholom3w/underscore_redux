@@ -531,18 +531,6 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
-    // return array of objects in correct order
-    // if (typeof iterator == "string") {
-    // //   let length = collection[0]Array.prototype[iterator];
-    //   for(let m = 0; m < collection.length; m++) {
-    //     let highestItem = collection[m];
-    //     let highestItemLength = highestItem[iterator];
-    //     for (let n = 0; n < collection.length - m; n++) {
-    //       let currentItem = collection[n];
-    //       let currentItemLength = currentItem.iterator;
-    //     }
-    //   }
-    // }
     let highestObj;
     let highestValue;
     let currentObj;
@@ -566,6 +554,7 @@
           currentObj = collection[j];
           currentValue = iterator(currentObj);
         }
+
         if(currentValue == undefined){
           highestValue = currentValue;
           highestObj = currentObj;
@@ -654,6 +643,26 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    let argsArray = Array.from(arguments);
+    let firstArray = argsArray[0];
+    let firstArrayLength = firstArray.length
+    let matches = [];
+    // to truly implement it would also need to test which array is the longest and start there
+    // 
+    while(argsArray.length !== 1) {
+      for (let i = 0; i < firstArrayLength; i++){
+        let nextArray = argsArray[1];
+        for(let j = 0; j < firstArrayLength - i; j++){
+          if (firstArray[i] == nextArray[j]) {
+            matches.push(firstArray[i]);
+            break;
+          }
+        }
+      }
+      argsArray.shift();
+      firstArray = argsArray[0];
+    }
+    return matches;
   };
 
   // Take the difference between one array and a number of other arrays.
