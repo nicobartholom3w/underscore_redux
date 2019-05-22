@@ -533,17 +533,39 @@
   _.sortBy = function(collection, iterator) {
     // return array of objects in correct order
     // if (typeof iterator == "string") {
-    //   let length = collection[0]Array.prototype[iterator];
+    // //   let length = collection[0]Array.prototype[iterator];
+    //   for(let m = 0; m < collection.length; m++) {
+    //     let highestItem = collection[m];
+    //     let highestItemLength = highestItem[iterator];
+    //     for (let n = 0; n < collection.length - m; n++) {
+    //       let currentItem = collection[n];
+    //       let currentItemLength = currentItem.iterator;
+    //     }
+    //   }
     // }
+    let highestObj;
+    let highestValue;
+    let currentObj;
+    let currentValue;
 
     for (let i = 0; i < collection.length; i++) {
-      let highestObj = collection[0];
-      let highestValue = iterator(highestObj);
-
+      if (typeof iterator == "string") {
+        highestObj = collection[0];
+        highestValue = highestObj[iterator];
+      }
+      else {
+        highestObj = collection[0];
+        highestValue = iterator(highestObj);
+      }
       for (let j = 0; j < collection.length - i; j++){
-        let currentObj = collection[j];
-        let currentValue = iterator(currentObj);
-        
+        if (typeof iterator == "string") {
+          currentObj = collection[j];
+          currentValue = currentObj[iterator];
+        }
+        else {
+          currentObj = collection[j];
+          currentValue = iterator(currentObj);
+        }
         if(currentValue == undefined){
           highestValue = currentValue;
           highestObj = currentObj;
