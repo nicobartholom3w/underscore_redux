@@ -695,5 +695,19 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+    let canExecuteFunction = true;
+
+    function isTrue () {
+      return canExecuteFunction = true;
+    }
+
+    return function(){
+      if(canExecuteFunction == true) {
+        func();
+        canExecuteFunction = false;
+        setTimeout(isTrue, wait);
+      }
+    }
+    
   };
 }());
