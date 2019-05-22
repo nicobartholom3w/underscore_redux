@@ -660,7 +660,7 @@
         }
       }
       argsArray.shift();
-      nextArray = argsArray[0];
+      nextArray = argsArray[1];
     }
     return firstArray;
   };
@@ -668,7 +668,24 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    let argsArray = Array.from(arguments);
+    let firstArray = argsArray[0];
+    let nextArray = argsArray[1];
 
+    while(argsArray.length !== 1) {
+      for (let i = 0; i < firstArray.length; i++){
+        for(let j = 0; j < nextArray.length; j++){
+          if (firstArray[i] == nextArray[j]) {
+            firstArray.splice(i, 1);
+            i--;
+            break;
+          }
+        }
+      }
+      argsArray.shift();
+      nextArray = argsArray[1];
+    }
+    return firstArray;
 
   };
 
